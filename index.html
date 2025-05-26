@@ -57,7 +57,23 @@
 </head>
 <body>
 
-  <div id="idade" class="aba active">
+  <div id="quem-e-voce" class="aba active">
+    <h1>Quem é você?</h1>
+    <button onclick="escolher('quem', 'Gina')">Gina</button>
+    <button onclick="escolher('quem', 'Ana')">Ana</button>
+    <button onclick="escolher('quem', 'Sergio')">Sergio</button>
+    <button onclick="escolher('quem', 'Ines')">Ines</button>
+  </div>
+
+  <div id="relacao-sergio" class="aba">
+    <h1>Você é o que do Sergio?</h1>
+    <button onclick="escolher('relacao', 'Tia')">Tia</button>
+    <button onclick="escolher('relacao', 'Mãe')">Mãe</button>
+    <button onclick="escolher('relacao', 'Amiga')">Amiga</button>
+    <button onclick="escolher('relacao', 'Prima')">Prima</button>
+  </div>
+
+  <div id="idade" class="aba">
     <h1>Qual sua idade?</h1>
     <button onclick="escolher('idade', 'Menos de 18')">Menos de 18</button>
     <button onclick="escolher('idade', '18-30')">18-30</button>
@@ -99,7 +115,7 @@
 
 <script>
   const respostas = {};
-  const abas = ['idade', 'cor-cabelo', 'cor-olhos', 'cor-pele', 'resumo'];
+  const abas = ['quem-e-voce', 'relacao-sergio', 'idade', 'cor-cabelo', 'cor-olhos', 'cor-pele', 'resumo'];
   let indiceAtual = 0;
 
   function esconderTodasAbas() {
