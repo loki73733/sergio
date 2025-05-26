@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cadastro Multi Etapas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f7f7f7;
+      border-radius: 8px;
+    }
+    h1 {
+      font-size: 24px;
+    }
+    .aba {
+      display: none;
+    }
+    .aba.active {
+      display: block;
+    }
+    button {
+      display: block;
+      margin: 12px 0;
+      padding: 12px 20px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      border: 1px solid #333;
+      background: white;
+      transition: background-color 0.2s ease;
+    }
+    button:hover {
+      background-color: #ddd;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    ul li {
+      padding: 6px 0;
+      border-bottom: 1px solid #ccc;
+    }
+    #enviar {
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bold;
+      border: none;
+    }
+    #enviar:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="idade" class="aba active">
+    <h1>Qual sua idade?</h1>
+    <button onclick="escolher('idade', 'Menos de 18')">Menos de 18</button>
+    <button onclick="escolher('idade', '18-30')">18-30</button>
+    <button onclick="escolher('idade', '31-50')">31-50</button>
+    <button onclick="escolher('idade', 'Mais de 50')">Mais de 50</button>
+  </div>
+
+  <div id="cor-cabelo" class="aba">
+    <h1>Qual a cor do seu cabelo?</h1>
+    <button onclick="escolher('corCabelo', 'Preto')">Preto</button>
+    <button onclick="escolher('corCabelo', 'Castanho')">Castanho</button>
+    <button onclick="escolher('corCabelo', 'Loiro')">Loiro</button>
+    <button onclick="escolher('corCabelo', 'Ruivo')">Ruivo</button>
+    <button onclick="escolher('corCabelo', 'Outro')">Outro</button>
+  </div>
+
+  <div id="cor-olhos" class="aba">
+    <h1>Qual a cor dos seus olhos?</h1>
+    <button onclick="escolher('corOlhos', 'Azul')">Azul</button>
+    <button onclick="escolher('corOlhos', 'Verde')">Verde</button>
+    <button onclick="escolher('corOlhos', 'Castanho')">Castanho</button>
+    <button onclick="escolher('corOlhos', 'Preto')">Preto</button>
+    <button onclick="escolher('corOlhos', 'Outro')">Outro</button>
+  </div>
+
+  <div id="cor-pele" class="aba">
+    <h1>Qual a cor da sua pele?</h1>
+    <button onclick="escolher('corPele', 'Clara')">Clara</button>
+    <button onclick="escolher('corPele', 'Morena')">Morena</button>
+    <button onclick="escolher('corPele', 'Negra')">Negra</button>
+    <button onclick="escolher('corPele', 'Outra')">Outra</button>
+  </div>
+
+  <div id="resumo" class="aba">
+    <h1>Resumo do cadastro</h1>
+    <ul id="lista-respostas"></ul>
+    <button id="enviar" onclick="enviar()">Enviar cadastro</button>
+  </div>
+
+<script>
+  const respostas = {};
+  const abas = ['idade', 'cor-cabelo', 'cor-olhos', 'cor-pele', 'resumo'];
+  let indiceAtual = 0;
+
+  function esconderTodasAbas() {
+    abas.forEach(id => {
+      document.getElementById(id).classList.remove('active');
+    });
+  }
+
+  function mostrarAba(id) {
+    esconderTodasAbas();
+    document.getElementById(id).classList.add('active');
+  }
+
+  function escolher(campo, valor) {
+    respostas[campo] = valor;
+    indiceAtual++;
+    if (indiceAtual < abas.length) {
+      mostrarAba(abas[indiceAtual]);
+      if (abas[indiceAtual] === 'resumo') {
+        mostrarResumo();
+      }
+    }
+  }
+
+  function mostrarResumo() {
+    const ul = document.getElementById('lista-respostas');
+    ul.innerHTML = '';
+    for (const [chave, valor] of Object.entries(respostas)) {
+      const li = document.createElement('li');
+      li.textContent = `${chave}: ${valor}`;
+      ul.appendChild(li);
+    }
+  }
+
+  function enviar() {
+    alert('Cadastro enviado com sucesso!\n' + JSON.stringify(respostas, null, 2));
+    // Aqui você poderia fazer um fetch pra uma API real, mas GitHub Pages não suporta backend.
+    indiceAtual = 0;
+    mostrarAba(abas[indiceAtual]);
+  }
+</script>
+
+</body>
+</html>
