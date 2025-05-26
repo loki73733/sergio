@@ -4,54 +4,119 @@
   <meta charset="UTF-8" />
   <title>Cadastro Multi Etapas</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+    
     body {
-      font-family: Arial, sans-serif;
-      max-width: 500px;
-      margin: 40px auto;
-      padding: 20px;
-      background: #f7f7f7;
-      border-radius: 8px;
+      font-family: 'Roboto', Arial, sans-serif;
+      max-width: 480px;
+      margin: 50px auto;
+      padding: 30px 25px;
+      background: linear-gradient(135deg, #cce5ff 0%, #e6f0ff 100%);
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0, 80, 180, 0.15);
+      color: #2c3e50;
     }
+
     h1 {
-      font-size: 24px;
+      font-size: 28px;
+      margin-bottom: 30px;
+      text-align: center;
+      color: #1a3d7c;
+      text-shadow: 1px 1px 3px rgba(26, 61, 124, 0.3);
     }
+
     .aba {
       display: none;
+      animation: fadeIn 0.5s ease forwards;
     }
+
     .aba.active {
       display: block;
     }
+
     button {
       display: block;
-      margin: 12px 0;
-      padding: 12px 20px;
       width: 100%;
-      font-size: 16px;
+      margin: 12px 0;
+      padding: 14px 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a3d7c;
+      background-color: #d0e4ff;
+      border: 2px solid #7ab3ff;
+      border-radius: 8px;
       cursor: pointer;
-      border-radius: 5px;
-      border: 1px solid #333;
-      background: white;
-      transition: background-color 0.2s ease;
+      transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: inset 0 -3px 0 #7ab3ff;
+      user-select: none;
     }
-    button:hover {
-      background-color: #ddd;
+
+    button:hover, button:focus {
+      background-color: #7ab3ff;
+      border-color: #1a3d7c;
+      color: white;
+      box-shadow: 0 4px 15px rgba(122, 179, 255, 0.6);
+      outline: none;
     }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    #enviar {
+      background-color: #28a745;
+      border: none;
+      color: white;
+      box-shadow: 0 6px 12px rgba(40, 167, 69, 0.6);
+      font-size: 20px;
+      font-weight: 700;
+      margin-top: 35px;
+    }
+
+    #enviar:hover, #enviar:focus {
+      background-color: #218838;
+      box-shadow: 0 8px 20px rgba(33, 136, 56, 0.8);
+    }
+
     ul {
       list-style: none;
       padding-left: 0;
+      margin-top: 0;
+      border-radius: 8px;
+      background: white;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+      max-height: 280px;
+      overflow-y: auto;
     }
+
     ul li {
-      padding: 6px 0;
-      border-bottom: 1px solid #ccc;
+      padding: 12px 20px;
+      border-bottom: 1px solid #e1e8f7;
+      font-size: 18px;
+      color: #34495e;
+      font-weight: 500;
     }
-    #enviar {
-      background-color: #4CAF50;
-      color: white;
-      font-weight: bold;
-      border: none;
+
+    ul li:last-child {
+      border-bottom: none;
     }
-    #enviar:hover {
-      background-color: #45a049;
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    /* Scrollbar personalizado para o resumo */
+    ul::-webkit-scrollbar {
+      width: 8px;
+    }
+    ul::-webkit-scrollbar-track {
+      background: #f0f5fc;
+      border-radius: 8px;
+    }
+    ul::-webkit-scrollbar-thumb {
+      background-color: #7ab3ff;
+      border-radius: 8px;
     }
   </style>
 </head>
@@ -145,16 +210,28 @@
     ul.innerHTML = '';
     for (const [chave, valor] of Object.entries(respostas)) {
       const li = document.createElement('li');
-      li.textContent = `${chave}: ${valor}`;
+      li.textContent = `${formatarCampo(chave)}: ${valor}`;
       ul.appendChild(li);
     }
   }
 
+  function formatarCampo(campo) {
+    switch(campo) {
+      case 'quem': return 'Quem é você';
+      case 'relacao': return 'Relação com Sergio';
+      case 'idade': return 'Idade';
+      case 'corCabelo': return 'Cor do cabelo';
+      case 'corOlhos': return 'Cor dos olhos';
+      case 'corPele': return 'Cor da pele';
+      default: return campo;
+    }
+  }
+
   function enviar() {
-    alert('Cadastro enviado com sucesso!\n' + JSON.stringify(respostas, null, 2));
-    // Aqui você poderia fazer um fetch pra uma API real, mas GitHub Pages não suporta backend.
-    indiceAtual = 0;
-    mostrarAba(abas[indiceAtual]);
+    alert('Cadastro enviado! Obrigado.');
+    // Aqui poderia enviar dados para um servidor, por exemplo
+    // Para efeito didático, apenas mostra alert.
+    location.reload(); // Reinicia o cadastro para novo preenchimento
   }
 </script>
 
